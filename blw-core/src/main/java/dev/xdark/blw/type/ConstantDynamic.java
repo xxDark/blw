@@ -1,8 +1,6 @@
-package dev.xdark.blw.type.generic;
+package dev.xdark.blw.type;
 
 import dev.xdark.blw.constant.Constant;
-import dev.xdark.blw.type.ClassType;
-import dev.xdark.blw.type.DynamicAlike;
 
 import java.util.List;
 

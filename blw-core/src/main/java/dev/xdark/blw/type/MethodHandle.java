@@ -1,7 +1,4 @@
-package dev.xdark.blw.type.generic;
-
-import dev.xdark.blw.type.ObjectType;
-import dev.xdark.blw.type.Type;
+package dev.xdark.blw.type;
 
 public final class MethodHandle {
 	private final int kind;

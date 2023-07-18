@@ -1,9 +1,6 @@
 package dev.xdark.blw.type;
 
 import dev.xdark.blw.constant.Constant;
-import dev.xdark.blw.type.generic.ConstantDynamic;
-import dev.xdark.blw.type.generic.MethodHandle;
-import dev.xdark.blw.type.generic.InvokeDynamic;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import dev.xdark.blw.code.Instruction;
 import dev.xdark.blw.code.Opcodes;
 import dev.xdark.blw.constant.Constant;
 import dev.xdark.blw.type.Type;
-import dev.xdark.blw.type.generic.MethodHandle;
+import dev.xdark.blw.type.MethodHandle;
 
 import java.util.List;
 

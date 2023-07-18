@@ -1,6 +1,6 @@
 package dev.xdark.blw.constant;
 
-import dev.xdark.blw.type.generic.ConstantDynamic;
+import dev.xdark.blw.type.ConstantDynamic;
 
 public final class OfDynamic implements ReferenceConstant<ConstantDynamic> {
 	private final ConstantDynamic value;

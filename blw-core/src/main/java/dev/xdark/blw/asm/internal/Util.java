@@ -28,8 +28,8 @@ import dev.xdark.blw.type.ObjectType;
 import dev.xdark.blw.type.Type;
 import dev.xdark.blw.type.TypeReader;
 import dev.xdark.blw.type.Types;
-import dev.xdark.blw.type.generic.ConstantDynamic;
-import dev.xdark.blw.type.generic.MethodHandle;
+import dev.xdark.blw.type.ConstantDynamic;
+import dev.xdark.blw.type.MethodHandle;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Handle;
 

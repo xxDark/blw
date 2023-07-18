@@ -1,6 +1,6 @@
 package dev.xdark.blw.constant;
 
-import dev.xdark.blw.type.generic.MethodHandle;
+import dev.xdark.blw.type.MethodHandle;
 
 public final class OfMethodHandle implements ReferenceConstant<MethodHandle> {
 	private final MethodHandle value;
