@@ -1,0 +1,32 @@
+allprojects {
+    group 'dev.xdark'
+    version '1.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+        maven { url = 'https://jitpack.io' }
+    }
+
+    configurations {
+        testImplementation.extendsFrom implementation
+        testImplementation.extendsFrom compileOnly
+    }
+
+    dependencies {
+        compileOnly 'org.jetbrains:annotations:24.0.1'
+
+        testImplementation platform('org.junit:junit-bom:5.9.3')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+    }
+
+    test {
+        useJUnitPlatform()
+        jvmArgs '--enable-preview'
+    }
+
+    tasks.withType(JavaCompile)*.options*.compilerArgs*.add '--enable-preview'
+}

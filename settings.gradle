@@ -1,0 +1,6 @@
+rootProject.name = 'blw'
+include 'blw-core'
+
+if (file('blw-virtual').isDirectory()) {
+    include 'blw-virtual'
+}
