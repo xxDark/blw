@@ -2,13 +2,15 @@ package dev.xdark.blw.code;
 
 import dev.xdark.blw.util.Builder;
 
+import java.util.List;
+
 public sealed interface CodeListBuilder permits CodeListBuilder.Root, CodeListBuilder.Nested {
 
 	CodeListBuilder element(Instruction instruction);
 
 	CodeListBuilder element(Label label);
 
-	non-sealed interface Root extends CodeListBuilder, Builder.Root<CodeList> {
+	non-sealed interface Root extends CodeListBuilder, Builder.Root<List<CodeElement>> {
 
 		@Override
 		CodeListBuilder.Root element(Instruction instruction);

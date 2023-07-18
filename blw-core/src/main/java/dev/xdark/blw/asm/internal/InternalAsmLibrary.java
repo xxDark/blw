@@ -22,6 +22,7 @@ import dev.xdark.blw.classfile.Field;
 import dev.xdark.blw.classfile.Method;
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.Label;
+import dev.xdark.blw.code.Local;
 import dev.xdark.blw.code.TryCatchBlock;
 import dev.xdark.blw.constant.Constant;
 import dev.xdark.blw.constant.OfDouble;
@@ -161,6 +162,16 @@ public final class InternalAsmLibrary implements BytecodeLibrary {
 							mapping.getLabel(tcb.end()),
 							mapping.getLabel(tcb.handler()),
 							(type = tcb.type()) == null ? null : type.internalName()
+					);
+				}
+				for (Local local : code.localVariables()) {
+					mv.visitLocalVariable(
+							local.name(),
+							local.type().descriptor(),
+							local.signature(),
+							mapping.getLabel(local.start()),
+							mapping.getLabel(local.end()),
+							local.index()
 					);
 				}
 				mv.visitMaxs(code.maxStack(), code.maxLocals());

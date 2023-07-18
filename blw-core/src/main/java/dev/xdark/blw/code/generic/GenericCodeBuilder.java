@@ -2,8 +2,9 @@ package dev.xdark.blw.code.generic;
 
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.CodeBuilder;
-import dev.xdark.blw.code.CodeList;
+import dev.xdark.blw.code.CodeElement;
 import dev.xdark.blw.code.CodeListBuilder;
+import dev.xdark.blw.code.Local;
 import dev.xdark.blw.code.TryCatchBlock;
 import dev.xdark.blw.internal.BuilderShadow;
 import dev.xdark.blw.util.Builder;
@@ -12,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract sealed class GenericCodeBuilder implements BuilderShadow<Code> permits GenericCodeBuilder.Root, GenericCodeBuilder.Nested {
-	private static final CodeList EMPTY_CODE_LIST = new GenericCodeList(List.of());
 	int maxStack, maxLocals;
 	List<TryCatchBlock> tryCatchBlocks = List.of();
 	CodeListBuilder.Nested<? extends CodeBuilder> content;
+	List<Local> localVariables = List.of();
 
 	public CodeBuilder maxStack(int maxStack) {
 		this.maxStack = maxStack;
@@ -42,6 +43,21 @@ public abstract sealed class GenericCodeBuilder implements BuilderShadow<Code> p
 		return (CodeBuilder) this;
 	}
 
+	public CodeBuilder localVariables(List<Local> localVariables) {
+		this.localVariables = localVariables;
+		return (CodeBuilder) this;
+	}
+
+	public CodeBuilder localVariable(Local local) {
+		List<Local> locals = localVariables;
+		if (locals.isEmpty()) {
+			locals = new ArrayList<>();
+			localVariables = locals;
+		}
+		locals.add(local);
+		return (CodeBuilder) this;
+	}
+
 	public CodeListBuilder.Nested<? extends CodeBuilder> codeList() {
 		CodeListBuilder.Nested<? extends CodeBuilder> content = this.content;
 		if (content == null) {
@@ -57,9 +73,9 @@ public abstract sealed class GenericCodeBuilder implements BuilderShadow<Code> p
 		return new GenericCode(
 				maxStack,
 				maxLocals,
-				(content = this.content) == null ? EMPTY_CODE_LIST : ((BuilderShadow<CodeList>) content).build(),
-				tryCatchBlocks
-		);
+				(content = this.content) == null ? new ArrayList<>() : ((BuilderShadow<List<CodeElement>>) content).build(),
+				tryCatchBlocks,
+				localVariables);
 	}
 
 	public static final class Root extends GenericCodeBuilder implements CodeBuilder.Root {
@@ -88,6 +104,16 @@ public abstract sealed class GenericCodeBuilder implements BuilderShadow<Code> p
 		public CodeListBuilder.Nested<CodeBuilder.Root> codeList() {
 			//noinspection unchecked
 			return (CodeListBuilder.Nested<CodeBuilder.Root>) super.codeList();
+		}
+
+		@Override
+		public CodeBuilder.Root localVariables(List<Local> localVariables) {
+			return (CodeBuilder.Root) super.localVariables(localVariables);
+		}
+
+		@Override
+		public CodeBuilder.Root localVariable(Local local) {
+			return (CodeBuilder.Root) super.localVariable(local);
 		}
 
 		@Override
@@ -131,6 +157,18 @@ public abstract sealed class GenericCodeBuilder implements BuilderShadow<Code> p
 		public CodeListBuilder.Nested<CodeBuilder.Nested<U>> codeList() {
 			//noinspection unchecked
 			return (CodeListBuilder.Nested<CodeBuilder.Nested<U>>) super.codeList();
+		}
+
+		@Override
+		public CodeBuilder.Nested<U> localVariables(List<Local> localVariables) {
+			//noinspection unchecked
+			return (CodeBuilder.Nested<U>) super.localVariables(localVariables);
+		}
+
+		@Override
+		public CodeBuilder.Nested<U> localVariable(Local local) {
+			//noinspection unchecked
+			return (CodeBuilder.Nested<U>) super.localVariable(local);
 		}
 
 		@Override

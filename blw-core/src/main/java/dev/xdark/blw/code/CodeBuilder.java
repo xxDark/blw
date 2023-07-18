@@ -18,6 +18,10 @@ public sealed interface CodeBuilder permits CodeBuilder.Root, CodeBuilder.Nested
 	@Nullable
 	CodeListBuilder.Nested<? extends CodeBuilder> codeList();
 
+	CodeBuilder localVariables(List<Local> locals);
+
+	CodeBuilder localVariable(Local local);
+
 	non-sealed interface Root extends CodeBuilder, Builder.Root<Code> {
 
 		@Override
@@ -34,6 +38,12 @@ public sealed interface CodeBuilder permits CodeBuilder.Root, CodeBuilder.Nested
 
 		@Override
 		CodeListBuilder.@Nullable Nested<CodeBuilder.Root> codeList();
+
+		@Override
+		CodeBuilder.Root localVariables(List<Local> locals);
+
+		@Override
+		CodeBuilder.Root localVariable(Local local);
 	}
 
 	non-sealed interface Nested<U extends Builder> extends CodeBuilder, Builder.Nested<U> {
@@ -52,5 +62,11 @@ public sealed interface CodeBuilder permits CodeBuilder.Root, CodeBuilder.Nested
 
 		@Override
 		CodeListBuilder.@Nullable Nested<CodeBuilder.Nested<U>> codeList();
+
+		@Override
+		CodeBuilder.Nested<U> localVariables(List<Local> locals);
+
+		@Override
+		CodeBuilder.Nested<U> localVariable(Local local);
 	}
 }

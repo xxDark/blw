@@ -1,5 +1,6 @@
 package dev.xdark.blw.code;
 
+import dev.xdark.blw.util.Mutable;
 import dev.xdark.blw.util.Reflectable;
 
 import java.util.List;
@@ -12,12 +13,15 @@ public interface Code extends Reflectable<Code> {
 
 	CodeWalker walker();
 
-	CodeList codeList();
+	@Mutable
+	List<CodeElement> elements();
 
 	List<TryCatchBlock> tryCatchBlocks();
 
+	List<Local> localVariables();
+
 	default Label start() {
-		return (Label) codeList().stream().filter(x -> x instanceof Label).findFirst().orElseThrow();
+		return (Label) elements().stream().filter(x -> x instanceof Label).findFirst().orElseThrow();
 	}
 
 	@Override

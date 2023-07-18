@@ -2,9 +2,9 @@ package dev.xdark.blw.code.generic;
 
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.CodeElement;
-import dev.xdark.blw.code.CodeList;
 import dev.xdark.blw.code.CodeWalker;
 import dev.xdark.blw.code.Label;
+import dev.xdark.blw.code.Local;
 import dev.xdark.blw.code.TryCatchBlock;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,14 +13,16 @@ import java.util.List;
 public final class GenericCode implements Code {
 	private final int maxStack;
 	private final int maxLocals;
-	private final CodeList stream;
+	private final List<CodeElement> elements;
 	private final List<TryCatchBlock> tryCatchBlocks;
+	private final List<Local> localVariables;
 
-	public GenericCode(int maxStack, int maxLocals, CodeList stream, List<TryCatchBlock> tryCatchBlocks) {
+	public GenericCode(int maxStack, int maxLocals, List<CodeElement> elements, List<TryCatchBlock> tryCatchBlocks, List<Local> localVariables) {
 		this.maxStack = maxStack;
 		this.maxLocals = maxLocals;
-		this.stream = stream;
+		this.elements = elements;
 		this.tryCatchBlocks = tryCatchBlocks;
+		this.localVariables = localVariables;
 	}
 
 	@Override
@@ -35,7 +37,7 @@ public final class GenericCode implements Code {
 
 	@Override
 	public CodeWalker walker() {
-		CodeList stream = this.stream;
+		List<CodeElement> stream = this.elements;
 		return new CodeWalker() {
 			CodeElement element;
 			int index = -1;
@@ -53,12 +55,12 @@ public final class GenericCode implements Code {
 			@Override
 			public void advance() {
 				int index = this.index + 1;
-				CodeList s;
+				List<CodeElement> s;
 				if (index < 0 || index >= (s = stream).size()) {
 					element = null;
 					return;
 				}
-				element = s.at(index);
+				element = s.get(index);
 				this.index = index;
 			}
 
@@ -75,8 +77,13 @@ public final class GenericCode implements Code {
 	}
 
 	@Override
-	public CodeList codeList() {
-		return stream;
+	public List<CodeElement> elements() {
+		return elements;
+	}
+
+	@Override
+	public List<Local> localVariables() {
+		return localVariables;
 	}
 
 	@Override

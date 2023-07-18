@@ -1,22 +1,21 @@
 package dev.xdark.blw.code.generic;
 
 import dev.xdark.blw.code.CodeElement;
-import dev.xdark.blw.code.CodeList;
 import dev.xdark.blw.code.CodeListBuilder;
-import dev.xdark.blw.code.Label;
 import dev.xdark.blw.code.Instruction;
+import dev.xdark.blw.code.Label;
 import dev.xdark.blw.internal.BuilderShadow;
 import dev.xdark.blw.util.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract sealed class GenericCodeListBuilder implements BuilderShadow<CodeList> permits GenericCodeListBuilder.Root, GenericCodeListBuilder.Nested {
+public abstract sealed class GenericCodeListBuilder implements BuilderShadow<List<CodeElement>> permits GenericCodeListBuilder.Root, GenericCodeListBuilder.Nested {
 	protected final List<CodeElement> elements = new ArrayList<>();
 
 	@Override
-	public CodeList build() {
-		return new GenericCodeList(elements);
+	public List<CodeElement> build() {
+		return elements;
 	}
 
 	public static final class Root extends GenericCodeListBuilder implements CodeListBuilder.Root {
@@ -36,7 +35,7 @@ public abstract sealed class GenericCodeListBuilder implements BuilderShadow<Cod
 		}
 
 		@Override
-		public CodeList reflectAs() {
+		public List<CodeElement> reflectAs() {
 			return super.reflectAs();
 		}
 	}

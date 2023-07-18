@@ -5,6 +5,7 @@ import dev.xdark.blw.code.CodeBuilder;
 import dev.xdark.blw.code.CodeListBuilder;
 import dev.xdark.blw.code.TryCatchBlock;
 import dev.xdark.blw.code.generic.GenericLabel;
+import dev.xdark.blw.code.generic.GenericLocal;
 import dev.xdark.blw.code.instruction.AllocateInstruction;
 import dev.xdark.blw.code.instruction.CheckCastInstruction;
 import dev.xdark.blw.code.instruction.ConditionalJumpInstruction;
@@ -214,6 +215,14 @@ final class AsmMethodVisitor extends MethodVisitor {
 	@Override
 	public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
 		return Util.visitAnnotation(method, descriptor, visible);
+	}
+
+	@Override
+	public void visitLocalVariable(String name, String descriptor, String signature, Label start, Label end, int index) {
+		CodeBuilder c = code;
+		if (c != null) {
+			c.localVariable(new GenericLocal(getLabel(start), getLabel(end), index, name, new TypeReader(descriptor).requireClassType(), signature));
+		}
 	}
 
 	private dev.xdark.blw.code.Label getLabel(Label label) {
