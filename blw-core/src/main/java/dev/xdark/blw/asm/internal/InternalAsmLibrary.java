@@ -14,6 +14,7 @@ import dev.xdark.blw.annotation.ElementInt;
 import dev.xdark.blw.annotation.ElementLong;
 import dev.xdark.blw.annotation.ElementShort;
 import dev.xdark.blw.annotation.ElementString;
+import dev.xdark.blw.annotation.ElementType;
 import dev.xdark.blw.asm.ClassWriterProvider;
 import dev.xdark.blw.classfile.ClassBuilder;
 import dev.xdark.blw.classfile.ClassFileView;
@@ -61,6 +62,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Type;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -214,6 +216,7 @@ public final class InternalAsmLibrary implements BytecodeLibrary {
 			case ElementShort e -> e.value();
 			case ElementByte e -> e.value();
 			case ElementBoolean e -> e.value();
+			case ElementType e -> Type.getType(e.value().descriptor());
 			default -> throw new IllegalStateException("Unexpected value: " + element);
 		});
 	}
