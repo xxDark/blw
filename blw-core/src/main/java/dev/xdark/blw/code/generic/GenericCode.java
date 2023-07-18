@@ -75,7 +75,7 @@ public final class GenericCode implements Code {
 	}
 
 	@Override
-	public CodeList codeStream() {
+	public CodeList codeList() {
 		return stream;
 	}
 

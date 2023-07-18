@@ -12,12 +12,12 @@ public interface Code extends Reflectable<Code> {
 
 	CodeWalker walker();
 
-	CodeList codeStream();
+	CodeList codeList();
 
 	List<TryCatchBlock> tryCatchBlocks();
 
 	default Label start() {
-		return (Label) codeStream().stream().filter(x -> x instanceof Label).findFirst().orElseThrow();
+		return (Label) codeList().stream().filter(x -> x instanceof Label).findFirst().orElseThrow();
 	}
 
 	@Override
