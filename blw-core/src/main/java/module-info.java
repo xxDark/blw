@@ -14,12 +14,7 @@ module dev.xdark.blw {
 	exports dev.xdark.blw.resolution;
 	exports dev.xdark.blw.resolution.jvm;
 	exports dev.xdark.blw.simulation;
-	exports dev.xdark.blw.simulation.virtual;
-	exports dev.xdark.blw.simulation.virtual.environment;
-	exports dev.xdark.blw.simulation.virtual.generic;
-	exports dev.xdark.blw.simulation.virtual.type;
 	exports dev.xdark.blw.type;
-	exports dev.xdark.blw.type.generic;
 	exports dev.xdark.blw.util;
 	exports dev.xdark.blw.version;
 
