@@ -1,7 +1,6 @@
 package dev.xdark.blw.asm;
 
 import dev.xdark.blw.BytecodeLibrary;
-import dev.xdark.blw.annotation.AnnotationFactory;
 import dev.xdark.blw.asm.internal.InternalAsmLibrary;
 import dev.xdark.blw.classfile.ClassBuilder;
 import dev.xdark.blw.classfile.ClassFileView;
