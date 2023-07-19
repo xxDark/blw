@@ -15,7 +15,7 @@ public abstract sealed class GenericCodeListBuilder implements BuilderShadow<Lis
 
 	@Override
 	public List<CodeElement> build() {
-		return elements;
+		return new CodeElementList(elements);
 	}
 
 	public static final class Root extends GenericCodeListBuilder implements CodeListBuilder.Root {
