@@ -141,7 +141,7 @@ final class AsmMethodVisitor extends MethodVisitor {
 	public void visitIntInsn(int opcode, int operand) {
 		if (content == null) return;
 		Instruction instruction = switch (opcode) {
-			case Opcodes.BIPUSH, Opcodes.SIPUSH -> new ConstantInstruction.Int(new OfInt(opcode));
+			case Opcodes.BIPUSH, Opcodes.SIPUSH -> new ConstantInstruction.Int(new OfInt(operand));
 			case Opcodes.NEWARRAY -> new AllocateInstruction(Types.arrayType(Types.primitiveOfKind(operand)));
 			default -> throw new IllegalStateException("Unexpected value: " + opcode);
 		};
