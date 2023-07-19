@@ -1,6 +1,6 @@
 package dev.xdark.blw.classfile;
 
-import dev.xdark.blw.code.Local;
+import dev.xdark.blw.code.attribute.Local;
 import org.jetbrains.annotations.Nullable;
 
 public sealed interface Signed permits ClassFileView, Local, Member {

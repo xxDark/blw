@@ -5,6 +5,7 @@ import dev.xdark.blw.classfile.ClassBuilder;
 import dev.xdark.blw.classfile.ClassFileView;
 import dev.xdark.blw.classfile.Field;
 import dev.xdark.blw.classfile.FieldBuilder;
+import dev.xdark.blw.classfile.attribute.InnerClass;
 import dev.xdark.blw.classfile.Method;
 import dev.xdark.blw.classfile.MethodBuilder;
 import dev.xdark.blw.constantpool.ConstantPool;
@@ -106,6 +107,24 @@ public abstract class ClassBuilderAdapter implements ClassBuilder {
 	@Override
 	public ClassBuilder field(Field field) {
 		delegate.field(field);
+		return this;
+	}
+
+	@Override
+	public ClassBuilder innerClasses(List<InnerClass> innerClasses) {
+		delegate.innerClasses(innerClasses);
+		return this;
+	}
+
+	@Override
+	public ClassBuilder innerClass(InnerClass innerClass) {
+		delegate.innerClass(innerClass);
+		return this;
+	}
+
+	@Override
+	public ClassBuilder nestHost(@Nullable InstanceType nestHost) {
+		delegate.nestHost(nestHost);
 		return this;
 	}
 

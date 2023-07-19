@@ -3,6 +3,7 @@ package dev.xdark.blw.classfile.generic;
 import dev.xdark.blw.annotation.Annotation;
 import dev.xdark.blw.classfile.ClassFileView;
 import dev.xdark.blw.classfile.Field;
+import dev.xdark.blw.classfile.attribute.InnerClass;
 import dev.xdark.blw.classfile.Method;
 import dev.xdark.blw.constantpool.ConstantPool;
 import dev.xdark.blw.type.InstanceType;
@@ -21,10 +22,12 @@ public final class GenericClassFileView implements ClassFileView {
 	private final List<InstanceType> interfaces;
 	private final List<Method> methods;
 	private final List<Field> fields;
+	private final List<InnerClass> innerClasses;
+	private final InstanceType nestHost;
 	private final List<Annotation> visibleRuntimeAnnotations;
 	private final List<Annotation> invisibleRuntimeAnnotations;
 
-	public GenericClassFileView(JavaVersion version, ConstantPool pool, int accessFlags, InstanceType type, InstanceType superClass, String signature, List<InstanceType> interfaces, List<Method> methods, List<Field> fields, List<Annotation> visibleRuntimeAnnotations, List<Annotation> invisibleRuntimeAnnotations) {
+	public GenericClassFileView(JavaVersion version, ConstantPool pool, int accessFlags, InstanceType type, InstanceType superClass, String signature, List<InstanceType> interfaces, List<Method> methods, List<Field> fields, List<InnerClass> innerClasses, InstanceType nestHost, List<Annotation> visibleRuntimeAnnotations, List<Annotation> invisibleRuntimeAnnotations) {
 		this.version = version;
 		this.pool = pool;
 		this.accessFlags = accessFlags;
@@ -34,6 +37,8 @@ public final class GenericClassFileView implements ClassFileView {
 		this.interfaces = interfaces;
 		this.methods = methods;
 		this.fields = fields;
+		this.innerClasses = innerClasses;
+		this.nestHost = nestHost;
 		this.visibleRuntimeAnnotations = visibleRuntimeAnnotations;
 		this.invisibleRuntimeAnnotations = invisibleRuntimeAnnotations;
 	}
@@ -86,6 +91,16 @@ public final class GenericClassFileView implements ClassFileView {
 	@Override
 	public List<Field> fields() {
 		return fields;
+	}
+
+	@Override
+	public List<InnerClass> innerClasses() {
+		return innerClasses;
+	}
+
+	@Override
+	public @Nullable InstanceType nestHost() {
+		return nestHost;
 	}
 
 	@Override

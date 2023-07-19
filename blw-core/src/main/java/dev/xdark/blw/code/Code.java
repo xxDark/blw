@@ -1,5 +1,6 @@
 package dev.xdark.blw.code;
 
+import dev.xdark.blw.code.attribute.Local;
 import dev.xdark.blw.util.Mutable;
 import dev.xdark.blw.util.Reflectable;
 

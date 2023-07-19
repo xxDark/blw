@@ -3,6 +3,7 @@ package dev.xdark.blw.classfile.generic;
 import dev.xdark.blw.annotation.AnnotationBuilder;
 import dev.xdark.blw.classfile.Method;
 import dev.xdark.blw.classfile.MethodBuilder;
+import dev.xdark.blw.classfile.attribute.Parameter;
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.CodeBuilder;
 import dev.xdark.blw.code.generic.GenericCodeBuilder;
@@ -13,6 +14,7 @@ import dev.xdark.blw.util.Builder;
 import dev.xdark.blw.util.Reflectable;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder implements BuilderShadow<Method> permits GenericMethodBuilder.Root, GenericMethodBuilder.Nested {
@@ -20,10 +22,26 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 	protected int accessFlags;
 	protected String name;
 	protected List<InstanceType> exceptionTypes = List.of();
+	private List<Parameter> parameters = List.of();
 	protected Reflectable<Code> code;
 
 	public MethodBuilder exceptionTypes(List<InstanceType> exceptionTypes) {
 		this.exceptionTypes = exceptionTypes;
+		return (MethodBuilder) this;
+	}
+
+	public MethodBuilder parameters(List<Parameter> parameters) {
+		this.parameters = parameters;
+		return (MethodBuilder) this;
+	}
+
+	public MethodBuilder parameter(Parameter parameter) {
+		List<Parameter> parameters = this.parameters;
+		if (parameters.isEmpty()) {
+			parameters = new ArrayList<>();
+			this.parameters = parameters;
+		}
+		parameters.add(parameter);
 		return (MethodBuilder) this;
 	}
 
@@ -83,6 +101,16 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 		}
 
 		@Override
+		public MethodBuilder.Root parameters(List<Parameter> parameters) {
+			return (MethodBuilder.Root) super.parameters(parameters);
+		}
+
+		@Override
+		public MethodBuilder.Root parameter(Parameter parameter) {
+			return (MethodBuilder.Root) super.parameter(parameter);
+		}
+
+		@Override
 		public MethodBuilder.Root signature(@Nullable String signature) {
 			return (MethodBuilder.Root) super.signature(signature);
 		}
@@ -119,6 +147,18 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 			this.name = name;
 			this.type = type;
 			this.upstream = upstream;
+		}
+
+		@Override
+		public MethodBuilder.Nested<U> parameters(List<Parameter> parameters) {
+			//noinspection unchecked
+			return (MethodBuilder.Nested<U>) super.parameters(parameters);
+		}
+
+		@Override
+		public MethodBuilder.Nested<U> parameter(Parameter parameter) {
+			//noinspection unchecked
+			return (MethodBuilder.Nested<U>) super.parameter(parameter);
 		}
 
 		@Override

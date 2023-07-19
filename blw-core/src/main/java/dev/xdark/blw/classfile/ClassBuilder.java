@@ -1,6 +1,7 @@
 package dev.xdark.blw.classfile;
 
 import dev.xdark.blw.annotation.AnnotationBuilder;
+import dev.xdark.blw.classfile.attribute.InnerClass;
 import dev.xdark.blw.classfile.generic.GenericClassBuilder;
 import dev.xdark.blw.constantpool.ConstantPool;
 import dev.xdark.blw.type.ClassType;
@@ -49,6 +50,12 @@ public interface ClassBuilder extends AccessibleBuilder, AnnotatedBuilder, Signe
 	ClassBuilder method(Method method);
 
 	ClassBuilder field(Field field);
+
+	ClassBuilder innerClasses(List<InnerClass> innerClasses);
+
+	ClassBuilder innerClass(InnerClass innerClass);
+
+	ClassBuilder nestHost(@Nullable InstanceType nestHost);
 
 	static ClassBuilder builder() {
 		return new GenericClassBuilder();

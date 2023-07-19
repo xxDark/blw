@@ -1,6 +1,7 @@
 package dev.xdark.blw.classfile;
 
 import dev.xdark.blw.annotation.AnnotationBuilder;
+import dev.xdark.blw.classfile.attribute.Parameter;
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.CodeBuilder;
 import dev.xdark.blw.type.InstanceType;
@@ -13,6 +14,10 @@ import java.util.List;
 public interface MethodBuilder extends MemberBuilder {
 
 	MethodBuilder exceptionTypes(List<InstanceType> exceptionTypes);
+
+	MethodBuilder parameters(List<Parameter> parameters);
+
+	MethodBuilder parameter(Parameter parameter);
 
 	MethodBuilder code(Code code);
 
@@ -42,6 +47,12 @@ public interface MethodBuilder extends MemberBuilder {
 		MethodBuilder.Root exceptionTypes(List<InstanceType> exceptionTypes);
 
 		@Override
+		MethodBuilder.Root parameters(List<Parameter> parameters);
+
+		@Override
+		MethodBuilder.Root parameter(Parameter parameter);
+
+		@Override
 		CodeBuilder.Nested<MethodBuilder.Root> code();
 	}
 
@@ -55,6 +66,12 @@ public interface MethodBuilder extends MemberBuilder {
 
 		@Override
 		@Nullable AnnotationBuilder.Nested<MethodBuilder.Nested<U>> invisibleRuntimeAnnotation(InstanceType type);
+
+		@Override
+		MethodBuilder.Nested<U> parameters(List<Parameter> parameters);
+
+		@Override
+		MethodBuilder.Nested<U> parameter(Parameter parameter);
 
 		@Override
 		CodeBuilder.Nested<MethodBuilder.Nested<U>> code();

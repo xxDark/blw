@@ -1,6 +1,7 @@
 package dev.xdark.blw.asm.internal;
 
 import dev.xdark.blw.classfile.ClassBuilder;
+import dev.xdark.blw.classfile.attribute.generic.GenericInnerClass;
 import dev.xdark.blw.type.TypeReader;
 import dev.xdark.blw.type.Types;
 import dev.xdark.blw.version.JavaVersion;
@@ -51,6 +52,21 @@ final class AsmClassFileVisitor extends ClassVisitor {
 		}
 		field.defaultValue(value == null ? null : Util.wrapConstant(value));
 		return new AsmFieldVisitor(field);
+	}
+
+	@Override
+	public void visitInnerClass(String name, String outerName, String innerName, int access) {
+		classBuilder.innerClass(new GenericInnerClass(
+				access,
+				Types.instanceTypeFromInternalName(name),
+				outerName == null ? null : Types.instanceTypeFromInternalName(outerName),
+				innerName
+		));
+	}
+
+	@Override
+	public void visitNestHost(String nestHost) {
+		classBuilder.nestHost(Types.instanceTypeFromInternalName(nestHost));
 	}
 
 	@Override

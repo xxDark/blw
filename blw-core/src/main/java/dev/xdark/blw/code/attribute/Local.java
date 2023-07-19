@@ -1,4 +1,4 @@
-package dev.xdark.blw.code;
+package dev.xdark.blw.code.attribute;
 
 import dev.xdark.blw.classfile.Signed;
 import dev.xdark.blw.code.Label;

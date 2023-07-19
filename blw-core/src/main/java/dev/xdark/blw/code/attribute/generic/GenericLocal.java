@@ -1,6 +1,6 @@
-package dev.xdark.blw.code.generic;
+package dev.xdark.blw.code.attribute.generic;
 
-import dev.xdark.blw.code.Local;
+import dev.xdark.blw.code.attribute.Local;
 import dev.xdark.blw.code.Label;
 import dev.xdark.blw.type.ClassType;
 import org.jetbrains.annotations.Nullable;

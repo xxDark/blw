@@ -7,8 +7,9 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.RandomAccess;
 
-public final class CodeElementList extends AbstractList<CodeElement> implements List<CodeElement> {
+public final class CodeElementList extends AbstractList<CodeElement> implements List<CodeElement>, RandomAccess {
 	private final List<CodeElement> backing;
 
 	public CodeElementList(List<CodeElement> backing) {

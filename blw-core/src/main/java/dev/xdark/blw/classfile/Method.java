@@ -1,5 +1,6 @@
 package dev.xdark.blw.classfile;
 
+import dev.xdark.blw.classfile.attribute.Parameter;
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.type.InstanceType;
 import dev.xdark.blw.type.MethodType;
@@ -17,6 +18,8 @@ public interface Method extends Member, Reflectable<Method> {
 	MethodType type();
 
 	List<InstanceType> exceptionTypes();
+
+	List<Parameter> parameters();
 
 	@Override
 	default Method reflectAs() {

@@ -6,6 +6,7 @@ import dev.xdark.blw.classfile.ClassBuilder;
 import dev.xdark.blw.classfile.ClassFileView;
 import dev.xdark.blw.classfile.Field;
 import dev.xdark.blw.classfile.FieldBuilder;
+import dev.xdark.blw.classfile.attribute.InnerClass;
 import dev.xdark.blw.classfile.Method;
 import dev.xdark.blw.classfile.MethodBuilder;
 import dev.xdark.blw.constantpool.ConstantPool;
@@ -25,6 +26,8 @@ public final class GenericClassBuilder implements ClassBuilder {
 	private final List<AnnotationBuilder> invisibleRuntimeAnnotation = new ArrayList<>();
 	private final List<Reflectable<Method>> methods = new ArrayList<>();
 	private final List<Reflectable<Field>> fields = new ArrayList<>();
+	private List<InnerClass> innerClasses = List.of();
+	private InstanceType nestHost;
 	private int accessFlags;
 	private String signature;
 	private ConstantPool pool;
@@ -128,6 +131,29 @@ public final class GenericClassBuilder implements ClassBuilder {
 	}
 
 	@Override
+	public ClassBuilder innerClasses(List<InnerClass> innerClasses) {
+		this.innerClasses = innerClasses;
+		return this;
+	}
+
+	@Override
+	public ClassBuilder innerClass(InnerClass innerClass) {
+		List<InnerClass> innerClasses = this.innerClasses;
+		if (innerClasses.isEmpty()) {
+			innerClasses = new ArrayList<>();
+			this.innerClasses = innerClasses;
+		}
+		innerClasses.add(innerClass);
+		return this;
+	}
+
+	@Override
+	public ClassBuilder nestHost(@Nullable InstanceType nestHost) {
+		this.nestHost = nestHost;
+		return this;
+	}
+
+	@Override
 	public ClassFileView build() {
 		return new GenericClassFileView(
 				version,
@@ -139,7 +165,8 @@ public final class GenericClassBuilder implements ClassBuilder {
 				interfaces,
 				buildList(methods),
 				buildList(fields),
-				buildList(visibleRuntimeAnnotations),
+				innerClasses,
+				nestHost, buildList(visibleRuntimeAnnotations),
 				buildList(invisibleRuntimeAnnotation)
 		);
 	}

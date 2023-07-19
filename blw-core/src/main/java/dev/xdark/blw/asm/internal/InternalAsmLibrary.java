@@ -22,7 +22,7 @@ import dev.xdark.blw.classfile.Field;
 import dev.xdark.blw.classfile.Method;
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.Label;
-import dev.xdark.blw.code.Local;
+import dev.xdark.blw.code.attribute.Local;
 import dev.xdark.blw.code.TryCatchBlock;
 import dev.xdark.blw.constant.Constant;
 import dev.xdark.blw.constant.OfDouble;

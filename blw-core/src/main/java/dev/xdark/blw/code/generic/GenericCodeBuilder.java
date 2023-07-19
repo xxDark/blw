@@ -4,7 +4,7 @@ import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.CodeBuilder;
 import dev.xdark.blw.code.CodeElement;
 import dev.xdark.blw.code.CodeListBuilder;
-import dev.xdark.blw.code.Local;
+import dev.xdark.blw.code.attribute.Local;
 import dev.xdark.blw.code.TryCatchBlock;
 import dev.xdark.blw.internal.BuilderShadow;
 import dev.xdark.blw.util.Builder;

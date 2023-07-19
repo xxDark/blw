@@ -2,13 +2,17 @@ package dev.xdark.blw.resolution;
 
 import dev.xdark.blw.classfile.Accessible;
 import dev.xdark.blw.type.ClassType;
+import dev.xdark.blw.type.InstanceType;
 import dev.xdark.blw.type.MethodType;
+import dev.xdark.blw.type.ObjectType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
 public interface ClassInfo<M extends Accessible, F extends Accessible> {
+
+	ObjectType type();
 
 	int accessFlags();
 

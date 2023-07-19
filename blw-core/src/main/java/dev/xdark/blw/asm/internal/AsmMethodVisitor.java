@@ -1,11 +1,12 @@
 package dev.xdark.blw.asm.internal;
 
 import dev.xdark.blw.classfile.MethodBuilder;
+import dev.xdark.blw.classfile.attribute.generic.GenericParameter;
 import dev.xdark.blw.code.CodeBuilder;
 import dev.xdark.blw.code.CodeListBuilder;
 import dev.xdark.blw.code.TryCatchBlock;
 import dev.xdark.blw.code.generic.GenericLabel;
-import dev.xdark.blw.code.generic.GenericLocal;
+import dev.xdark.blw.code.attribute.generic.GenericLocal;
 import dev.xdark.blw.code.instruction.AllocateInstruction;
 import dev.xdark.blw.code.instruction.CheckCastInstruction;
 import dev.xdark.blw.code.instruction.ConditionalJumpInstruction;
@@ -223,6 +224,11 @@ final class AsmMethodVisitor extends MethodVisitor {
 		if (c != null) {
 			c.localVariable(new GenericLocal(getLabel(start), getLabel(end), index, name, new TypeReader(descriptor).requireClassType(), signature));
 		}
+	}
+
+	@Override
+	public void visitParameter(String name, int access) {
+		method.parameter(new GenericParameter(access, name));
 	}
 
 	private dev.xdark.blw.code.Label getLabel(Label label) {

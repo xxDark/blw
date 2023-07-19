@@ -4,7 +4,7 @@ import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.CodeElement;
 import dev.xdark.blw.code.CodeWalker;
 import dev.xdark.blw.code.Label;
-import dev.xdark.blw.code.Local;
+import dev.xdark.blw.code.attribute.Local;
 import dev.xdark.blw.code.TryCatchBlock;
 import org.jetbrains.annotations.Nullable;
 

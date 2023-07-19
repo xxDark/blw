@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.stream.Stream;
 
 public final class FrameArenaAllocator<T> implements ArenaAllocator<T> {
-    private static final Object[] EMPTY_ARRAY = {};
 
     private int[] frames = new int[16];
     private int frameIndex;
@@ -29,6 +28,7 @@ public final class FrameArenaAllocator<T> implements ArenaAllocator<T> {
     }
 
     private final class Impl implements Arena<T> {
+        private static final Iterator<?>[] EMPTY_ARRAY = {};
 
         private Iterator<? extends T>[] cache = (Iterator<T>[]) EMPTY_ARRAY;
         private int index;

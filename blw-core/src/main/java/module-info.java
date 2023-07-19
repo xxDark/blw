@@ -4,10 +4,14 @@ module dev.xdark.blw {
 	exports dev.xdark.blw.constant;
 	exports dev.xdark.blw.code;
 	exports dev.xdark.blw.code.generic;
+	exports dev.xdark.blw.code.attribute;
+	exports dev.xdark.blw.code.attribute.generic;
 	exports dev.xdark.blw.code.instruction;
 	exports dev.xdark.blw.classfile;
 	exports dev.xdark.blw.classfile.generic;
 	exports dev.xdark.blw.classfile.adapter;
+	exports dev.xdark.blw.classfile.attribute;
+	exports dev.xdark.blw.classfile.attribute.generic;
 	exports dev.xdark.blw.annotation;
 	exports dev.xdark.blw.annotation.generic;
 	exports dev.xdark.blw.constantpool;
