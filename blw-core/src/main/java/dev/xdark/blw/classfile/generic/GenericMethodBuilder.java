@@ -71,8 +71,8 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 				invisibleRuntimeAnnotation(),
 				type,
 				(code = this.code) == null ? null : code.reflectAs(),
-				exceptionTypes
-		);
+				exceptionTypes,
+				parameters);
 	}
 
 	public static final class Root extends GenericMethodBuilder implements MethodBuilder.Root {
