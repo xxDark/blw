@@ -1,6 +1,7 @@
 package dev.xdark.blw.classfile;
 
 import dev.xdark.blw.annotation.AnnotationBuilder;
+import dev.xdark.blw.classfile.generic.GenericFieldBuilder;
 import dev.xdark.blw.constant.Constant;
 import dev.xdark.blw.type.ClassType;
 import dev.xdark.blw.type.InstanceType;
@@ -47,5 +48,9 @@ public sealed interface FieldBuilder extends MemberBuilder permits FieldBuilder.
 
 		@Override
 		@Nullable AnnotationBuilder.Nested<FieldBuilder.Nested<U>> invisibleRuntimeAnnotation(InstanceType type);
+	}
+
+	static FieldBuilder.Root builder() {
+		return new GenericFieldBuilder.Root();
 	}
 }

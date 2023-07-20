@@ -24,10 +24,11 @@ public final class GenericClassFileView implements ClassFileView {
 	private final List<Field> fields;
 	private final List<InnerClass> innerClasses;
 	private final InstanceType nestHost;
+	private final String sourceFile, sourceDebug;
 	private final List<Annotation> visibleRuntimeAnnotations;
 	private final List<Annotation> invisibleRuntimeAnnotations;
 
-	public GenericClassFileView(JavaVersion version, ConstantPool pool, int accessFlags, InstanceType type, InstanceType superClass, String signature, List<InstanceType> interfaces, List<Method> methods, List<Field> fields, List<InnerClass> innerClasses, InstanceType nestHost, List<Annotation> visibleRuntimeAnnotations, List<Annotation> invisibleRuntimeAnnotations) {
+	public GenericClassFileView(JavaVersion version, ConstantPool pool, int accessFlags, InstanceType type, InstanceType superClass, String signature, List<InstanceType> interfaces, List<Method> methods, List<Field> fields, List<InnerClass> innerClasses, InstanceType nestHost, String sourceFile, String sourceDebug, List<Annotation> visibleRuntimeAnnotations, List<Annotation> invisibleRuntimeAnnotations) {
 		this.version = version;
 		this.pool = pool;
 		this.accessFlags = accessFlags;
@@ -39,6 +40,8 @@ public final class GenericClassFileView implements ClassFileView {
 		this.fields = fields;
 		this.innerClasses = innerClasses;
 		this.nestHost = nestHost;
+		this.sourceFile = sourceFile;
+		this.sourceDebug = sourceDebug;
 		this.visibleRuntimeAnnotations = visibleRuntimeAnnotations;
 		this.invisibleRuntimeAnnotations = invisibleRuntimeAnnotations;
 	}
@@ -101,6 +104,16 @@ public final class GenericClassFileView implements ClassFileView {
 	@Override
 	public @Nullable InstanceType nestHost() {
 		return nestHost;
+	}
+
+	@Override
+	public @Nullable String sourceFile() {
+		return sourceFile;
+	}
+
+	@Override
+	public @Nullable String sourceDebug() {
+		return sourceDebug;
 	}
 
 	@Override

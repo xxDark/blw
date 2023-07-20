@@ -129,6 +129,18 @@ public abstract class ClassBuilderAdapter implements ClassBuilder {
 	}
 
 	@Override
+	public ClassBuilder sourceFile(@Nullable String sourceFile) {
+		delegate.sourceFile(sourceFile);
+		return this;
+	}
+
+	@Override
+	public ClassBuilder sourceDebug(@Nullable String sourceDebug) {
+		delegate.sourceDebug(sourceDebug);
+		return this;
+	}
+
+	@Override
 	public ClassFileView build() {
 		return delegate.build();
 	}

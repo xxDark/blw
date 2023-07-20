@@ -30,4 +30,10 @@ public non-sealed interface ClassFileView extends Accessible, Annotated, Signed 
 
 	@Nullable
 	InstanceType nestHost();
+
+	@Nullable
+	String sourceFile();
+
+	@Nullable
+	String sourceDebug();
 }

@@ -26,7 +26,7 @@ final class AsmClassFileVisitor extends ClassVisitor {
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 		classBuilder
-				.version(JavaVersion.of(version & 0xFFFF, (version >>> 16) & 0xFFFF))
+				.version(JavaVersion.classVersion(version & 0xFFFF, (version >>> 16) & 0xFFFF))
 				.accessFlags(access)
 				.type(Types.instanceTypeFromInternalName(name))
 				.signature(signature)
@@ -67,6 +67,11 @@ final class AsmClassFileVisitor extends ClassVisitor {
 	@Override
 	public void visitNestHost(String nestHost) {
 		classBuilder.nestHost(Types.instanceTypeFromInternalName(nestHost));
+	}
+
+	@Override
+	public void visitSource(String source, String debug) {
+		classBuilder.sourceFile(source).sourceDebug(debug);
 	}
 
 	@Override
