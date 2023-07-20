@@ -2,6 +2,7 @@ package dev.xdark.blw.classfile;
 
 import dev.xdark.blw.annotation.AnnotationBuilder;
 import dev.xdark.blw.classfile.attribute.Parameter;
+import dev.xdark.blw.classfile.generic.GenericMethodBuilder;
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.code.CodeBuilder;
 import dev.xdark.blw.type.InstanceType;
@@ -75,5 +76,9 @@ public interface MethodBuilder extends MemberBuilder {
 
 		@Override
 		CodeBuilder.Nested<MethodBuilder.Nested<U>> code();
+	}
+
+	static MethodBuilder.Root builder() {
+		return new GenericMethodBuilder.Root();
 	}
 }
