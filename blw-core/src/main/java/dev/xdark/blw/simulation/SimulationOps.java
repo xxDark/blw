@@ -1,6 +1,6 @@
 package dev.xdark.blw.simulation;
 
-import static dev.xdark.blw.code.Opcodes.*;
+import static dev.xdark.blw.code.JavaOpcodes.*;
 
 @SuppressWarnings("DuplicatedCode")
 public final class SimulationOps {

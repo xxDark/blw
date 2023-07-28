@@ -18,6 +18,7 @@ import dev.xdark.blw.code.Instruction;
 import dev.xdark.blw.code.instruction.InvokeDynamicInstruction;
 import dev.xdark.blw.code.instruction.LookupSwitchInstruction;
 import dev.xdark.blw.code.instruction.MethodInstruction;
+import dev.xdark.blw.code.instruction.PrimitiveConversionInstruction;
 import dev.xdark.blw.code.instruction.SimpleInstruction;
 import dev.xdark.blw.code.instruction.TableSwitchInstruction;
 import dev.xdark.blw.code.instruction.VarInstruction;
@@ -33,9 +34,10 @@ import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
 
 import java.util.Arrays;
+
+import static org.objectweb.asm.Opcodes.*;
 
 final class AsmMethodVisitor extends MethodVisitor {
 	private final MethodBuilder method;
@@ -43,7 +45,7 @@ final class AsmMethodVisitor extends MethodVisitor {
 	private final CodeListBuilder content;
 
 	AsmMethodVisitor(MethodBuilder method, boolean hasCode) {
-		super(Opcodes.ASM9);
+		super(ASM9);
 		this.method = method;
 		if (hasCode) {
 			CodeBuilder code = method.code();
@@ -67,20 +69,37 @@ final class AsmMethodVisitor extends MethodVisitor {
 	public void visitInsn(int opcode) {
 		if (content == null) return;
 		Instruction instruction = switch (opcode) {
-			case Opcodes.ICONST_M1,
-					Opcodes.ICONST_0,
-					Opcodes.ICONST_1,
-					Opcodes.ICONST_2,
-					Opcodes.ICONST_3,
-					Opcodes.ICONST_4,
-					Opcodes.ICONST_5 -> new ConstantInstruction.Int(new OfInt(opcode - Opcodes.ICONST_0));
-			case Opcodes.LCONST_0, Opcodes.LCONST_1 ->
-					new ConstantInstruction.Long(new OfLong(opcode - Opcodes.LCONST_0));
-			case Opcodes.FCONST_0, Opcodes.FCONST_1, Opcodes.FCONST_2 ->
-					new ConstantInstruction.Float(new OfFloat(opcode - Opcodes.FCONST_0));
-			case Opcodes.DCONST_0, Opcodes.DCONST_1 ->
-					new ConstantInstruction.Double(new OfDouble(opcode - Opcodes.DCONST_0));
-			default -> new SimpleInstruction(opcode);
+			case ICONST_M1,
+					ICONST_0,
+					ICONST_1,
+					ICONST_2,
+					ICONST_3,
+					ICONST_4,
+					ICONST_5 -> new ConstantInstruction.Int(new OfInt(opcode - ICONST_0));
+			case LCONST_0, LCONST_1 ->
+					new ConstantInstruction.Long(new OfLong(opcode - LCONST_0));
+			case FCONST_0, FCONST_1, FCONST_2 ->
+					new ConstantInstruction.Float(new OfFloat(opcode - FCONST_0));
+			case DCONST_0, DCONST_1 ->
+					new ConstantInstruction.Double(new OfDouble(opcode - DCONST_0));
+			default -> switch (opcode) {
+				case I2L -> new PrimitiveConversionInstruction(Types.INT, Types.LONG);
+				case I2F -> new PrimitiveConversionInstruction(Types.INT, Types.FLOAT);
+				case I2D -> new PrimitiveConversionInstruction(Types.INT, Types.DOUBLE);
+				case L2I -> new PrimitiveConversionInstruction(Types.LONG, Types.INT);
+				case L2F -> new PrimitiveConversionInstruction(Types.LONG, Types.FLOAT);
+				case L2D -> new PrimitiveConversionInstruction(Types.LONG, Types.DOUBLE);
+				case F2I -> new PrimitiveConversionInstruction(Types.FLOAT, Types.INT);
+				case F2L -> new PrimitiveConversionInstruction(Types.FLOAT, Types.LONG);
+				case F2D -> new PrimitiveConversionInstruction(Types.FLOAT, Types.DOUBLE);
+				case D2I -> new PrimitiveConversionInstruction(Types.DOUBLE, Types.INT);
+				case D2L -> new PrimitiveConversionInstruction(Types.DOUBLE, Types.LONG);
+				case D2F -> new PrimitiveConversionInstruction(Types.DOUBLE, Types.FLOAT);
+				case I2B -> new PrimitiveConversionInstruction(Types.INT, Types.BYTE);
+				case I2C -> new PrimitiveConversionInstruction(Types.INT, Types.CHAR);
+				case I2S -> new PrimitiveConversionInstruction(Types.INT, Types.SHORT);
+				default -> new SimpleInstruction(opcode);
+			};
 		};
 		add(instruction);
 	}
@@ -122,10 +141,10 @@ final class AsmMethodVisitor extends MethodVisitor {
 		if (content == null) return;
 		ObjectType objectType = Types.objectTypeFromInternalName(type);
 		Instruction instruction = switch (opcode) {
-			case Opcodes.CHECKCAST -> new CheckCastInstruction(objectType);
-			case Opcodes.INSTANCEOF -> new InstanceofInstruction(objectType);
-			case Opcodes.NEW -> new AllocateInstruction(objectType);
-			case Opcodes.ANEWARRAY -> new AllocateInstruction(Types.arrayType(objectType));
+			case CHECKCAST -> new CheckCastInstruction(objectType);
+			case INSTANCEOF -> new InstanceofInstruction(objectType);
+			case NEW -> new AllocateInstruction(objectType);
+			case ANEWARRAY -> new AllocateInstruction(Types.arrayType(objectType));
 			default -> throw new IllegalStateException("Unexpected value: " + opcode);
 		};
 		add(instruction);
@@ -141,8 +160,8 @@ final class AsmMethodVisitor extends MethodVisitor {
 	public void visitIntInsn(int opcode, int operand) {
 		if (content == null) return;
 		Instruction instruction = switch (opcode) {
-			case Opcodes.BIPUSH, Opcodes.SIPUSH -> new ConstantInstruction.Int(new OfInt(operand));
-			case Opcodes.NEWARRAY -> new AllocateInstruction(Types.arrayType(Types.primitiveOfKind(operand)));
+			case BIPUSH, SIPUSH -> new ConstantInstruction.Int(new OfInt(operand));
+			case NEWARRAY -> new AllocateInstruction(Types.arrayType(Types.primitiveOfKind(operand)));
 			default -> throw new IllegalStateException("Unexpected value: " + opcode);
 		};
 		add(instruction);
@@ -176,8 +195,8 @@ final class AsmMethodVisitor extends MethodVisitor {
 		if (content == null) return;
 		var l = getLabel(label);
 		Instruction instruction;
-		if (opcode == Opcodes.GOTO) {
-			instruction = new ImmediateJumpInstruction(Opcodes.GOTO, l);
+		if (opcode == GOTO) {
+			instruction = new ImmediateJumpInstruction(GOTO, l);
 		} else {
 			instruction = new ConditionalJumpInstruction(opcode, l);
 		}
@@ -229,6 +248,11 @@ final class AsmMethodVisitor extends MethodVisitor {
 	@Override
 	public void visitParameter(String name, int access) {
 		method.parameter(new GenericParameter(access, name));
+	}
+
+	@Override
+	public AnnotationVisitor visitAnnotationDefault() {
+		return new AnnotationDefaultCollector(method);
 	}
 
 	private dev.xdark.blw.code.Label getLabel(Label label) {

@@ -6,7 +6,7 @@ import dev.xdark.blw.type.Types;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Opcodes;
 
-public final class AsmAnnotationVisitor extends AnnotationVisitor {
+final class AsmAnnotationVisitor extends AnnotationVisitor {
 	private final AnnotationBuilder builder;
 
 	AsmAnnotationVisitor(AnnotationBuilder builder) {

@@ -1,7 +1,7 @@
 package dev.xdark.blw.code.instruction;
 
 import dev.xdark.blw.code.Instruction;
-import dev.xdark.blw.code.Opcodes;
+import dev.xdark.blw.code.JavaOpcodes;
 import dev.xdark.blw.type.ObjectType;
 
 public final class CheckCastInstruction implements Instruction {
@@ -13,7 +13,7 @@ public final class CheckCastInstruction implements Instruction {
 
 	@Override
 	public int opcode() {
-		return Opcodes.CHECKCAST;
+		return JavaOpcodes.CHECKCAST;
 	}
 
 	public ObjectType type() {

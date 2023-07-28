@@ -11,6 +11,7 @@ import dev.xdark.blw.code.Instruction;
 import dev.xdark.blw.code.instruction.InvokeDynamicInstruction;
 import dev.xdark.blw.code.instruction.LookupSwitchInstruction;
 import dev.xdark.blw.code.instruction.MethodInstruction;
+import dev.xdark.blw.code.instruction.PrimitiveConversionInstruction;
 import dev.xdark.blw.code.instruction.SimpleInstruction;
 import dev.xdark.blw.code.instruction.TableSwitchInstruction;
 import dev.xdark.blw.code.instruction.VarInstruction;
@@ -37,6 +38,7 @@ public final class ExecutionEngines {
 			case CheckCastInstruction cc -> engine.execute(cc);
 			case InstanceofInstruction i -> engine.execute(i);
 			case ConstantInstruction<?> c -> engine.execute(c);
+			case PrimitiveConversionInstruction i -> engine.execute(i);
 			default -> engine.execute(instruction);
 		}
 	}

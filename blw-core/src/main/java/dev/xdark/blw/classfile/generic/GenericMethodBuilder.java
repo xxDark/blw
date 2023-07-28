@@ -1,6 +1,7 @@
 package dev.xdark.blw.classfile.generic;
 
 import dev.xdark.blw.annotation.AnnotationBuilder;
+import dev.xdark.blw.annotation.Element;
 import dev.xdark.blw.classfile.Method;
 import dev.xdark.blw.classfile.MethodBuilder;
 import dev.xdark.blw.classfile.attribute.Parameter;
@@ -23,7 +24,8 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 	protected String name;
 	protected List<InstanceType> exceptionTypes = List.of();
 	private List<Parameter> parameters = List.of();
-	protected Reflectable<Code> code;
+	private Reflectable<Code> code;
+	private Reflectable<? extends Element> annotationDefault;
 
 	public MethodBuilder exceptionTypes(List<InstanceType> exceptionTypes) {
 		this.exceptionTypes = exceptionTypes;
@@ -60,9 +62,20 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 		return (CodeBuilder.Nested<? extends MethodBuilder>) code;
 	}
 
+	public MethodBuilder annotationDefault(Element annotationDefault) {
+		this.annotationDefault = Reflectable.wrap(annotationDefault);
+		return (MethodBuilder) this;
+	}
+
+	public MethodBuilder annotationDefault(Reflectable<? extends Element> annotationDefault) {
+		this.annotationDefault = annotationDefault;
+		return (MethodBuilder) this;
+	}
+
 	@Override
 	public Method build() {
 		Reflectable<Code> code;
+		Reflectable<? extends Element> annotationDefault;
 		return new GenericMethod(
 				accessFlags,
 				name,
@@ -72,7 +85,9 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 				type,
 				(code = this.code) == null ? null : code.reflectAs(),
 				exceptionTypes,
-				parameters);
+				parameters,
+				(annotationDefault = this.annotationDefault) == null ? null : annotationDefault.reflectAs()
+		);
 	}
 
 	public static final class Root extends GenericMethodBuilder implements MethodBuilder.Root {
@@ -134,6 +149,16 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 		}
 
 		@Override
+		public MethodBuilder.Root annotationDefault(Element annotationDefault) {
+			return (MethodBuilder.Root) super.annotationDefault(annotationDefault);
+		}
+
+		@Override
+		public MethodBuilder.Root annotationDefault(Reflectable<? extends Element> annotationDefault) {
+			return (MethodBuilder.Root) super.annotationDefault(annotationDefault);
+		}
+
+		@Override
 		public Method reflectAs() {
 			return super.reflectAs();
 		}
@@ -183,6 +208,18 @@ public abstract sealed class GenericMethodBuilder extends GenericMemberBuilder i
 		public @Nullable AnnotationBuilder.Nested<MethodBuilder.Nested<U>> invisibleRuntimeAnnotation(InstanceType type) {
 			//noinspection unchecked
 			return (AnnotationBuilder.Nested<MethodBuilder.Nested<U>>) super.invisibleRuntimeAnnotation(type);
+		}
+
+		@Override
+		public MethodBuilder.Nested<U> annotationDefault(Element annotationDefault) {
+			//noinspection unchecked
+			return (MethodBuilder.Nested<U>) super.annotationDefault(annotationDefault);
+		}
+
+		@Override
+		public MethodBuilder.Nested<U> annotationDefault(Reflectable<? extends Element> annotationDefault) {
+			//noinspection unchecked
+			return (MethodBuilder.Nested<U>) super.annotationDefault(annotationDefault);
 		}
 
 		@Override

@@ -1,7 +1,7 @@
 package dev.xdark.blw.code.instruction;
 
 import dev.xdark.blw.code.Instruction;
-import dev.xdark.blw.code.Opcodes;
+import dev.xdark.blw.code.ExtensionOpcodes;
 import dev.xdark.blw.type.ObjectType;
 
 public final class AllocateInstruction implements Instruction {
@@ -14,7 +14,7 @@ public final class AllocateInstruction implements Instruction {
 
 	@Override
 	public int opcode() {
-		return Opcodes.ALLOCATE;
+		return ExtensionOpcodes.ALLOCATE;
 	}
 
 	public ObjectType type() {

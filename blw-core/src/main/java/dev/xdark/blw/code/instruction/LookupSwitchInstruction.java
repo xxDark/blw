@@ -1,7 +1,7 @@
 package dev.xdark.blw.code.instruction;
 
+import dev.xdark.blw.code.JavaOpcodes;
 import dev.xdark.blw.code.Label;
-import dev.xdark.blw.code.Opcodes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +23,7 @@ public final class LookupSwitchInstruction implements SwitchInstruction {
 
 	@Override
 	public int opcode() {
-		return Opcodes.LOOKUPSWITCH;
+		return JavaOpcodes.LOOKUPSWITCH;
 	}
 
 	@Override

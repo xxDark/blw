@@ -1,6 +1,7 @@
 package dev.xdark.blw.classfile.generic;
 
 import dev.xdark.blw.annotation.Annotation;
+import dev.xdark.blw.annotation.Element;
 import dev.xdark.blw.classfile.Method;
 import dev.xdark.blw.classfile.attribute.Parameter;
 import dev.xdark.blw.code.Code;
@@ -15,13 +16,15 @@ public final class GenericMethod extends GenericMember implements Method {
 	private final Code code;
 	private final List<InstanceType> exceptionTypes;
 	private final List<Parameter> parameters;
+	private final Element annotationDefault;
 
-	public GenericMethod(int accessFlags, String name, String signature, List<Annotation> visibleRuntimeAnnotations, List<Annotation> invisibleRuntimeAnnotations, MethodType type, Code code, List<InstanceType> exceptionTypes, List<Parameter> parameters) {
+	public GenericMethod(int accessFlags, String name, String signature, List<Annotation> visibleRuntimeAnnotations, List<Annotation> invisibleRuntimeAnnotations, MethodType type, Code code, List<InstanceType> exceptionTypes, List<Parameter> parameters, Element annotationDefault) {
 		super(accessFlags, name, signature, visibleRuntimeAnnotations, invisibleRuntimeAnnotations);
 		this.type = type;
 		this.code = code;
 		this.exceptionTypes = exceptionTypes;
 		this.parameters = parameters;
+		this.annotationDefault = annotationDefault;
 	}
 
 	@Override
@@ -42,5 +45,10 @@ public final class GenericMethod extends GenericMember implements Method {
 	@Override
 	public List<Parameter> parameters() {
 		return parameters;
+	}
+
+	@Override
+	public @Nullable Element annotationDefault() {
+		return annotationDefault;
 	}
 }

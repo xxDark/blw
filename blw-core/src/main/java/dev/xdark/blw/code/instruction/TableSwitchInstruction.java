@@ -1,7 +1,7 @@
 package dev.xdark.blw.code.instruction;
 
+import dev.xdark.blw.code.JavaOpcodes;
 import dev.xdark.blw.code.Label;
-import dev.xdark.blw.code.Opcodes;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public final class TableSwitchInstruction implements SwitchInstruction {
 
 	@Override
 	public int opcode() {
-		return Opcodes.TABLESWITCH;
+		return JavaOpcodes.TABLESWITCH;
 	}
 
 	@Override

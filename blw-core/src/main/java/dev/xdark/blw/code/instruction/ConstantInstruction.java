@@ -1,7 +1,7 @@
 package dev.xdark.blw.code.instruction;
 
 import dev.xdark.blw.code.Instruction;
-import dev.xdark.blw.code.Opcodes;
+import dev.xdark.blw.code.ExtensionOpcodes;
 import dev.xdark.blw.constant.Constant;
 import dev.xdark.blw.constant.OfType;
 import dev.xdark.blw.constant.OfString;
@@ -54,7 +54,7 @@ public abstract sealed class ConstantInstruction<C extends Constant> implements 
 
 		@Override
 		public int opcode() {
-			return Opcodes.STRING_CONSTANT;
+			return ExtensionOpcodes.STRING_CONSTANT;
 		}
 	}
 
@@ -66,7 +66,7 @@ public abstract sealed class ConstantInstruction<C extends Constant> implements 
 
 		@Override
 		public int opcode() {
-			return Opcodes.METHOD_HANDLE_CONSTANT;
+			return ExtensionOpcodes.METHOD_HANDLE_CONSTANT;
 		}
 	}
 
@@ -78,7 +78,7 @@ public abstract sealed class ConstantInstruction<C extends Constant> implements 
 
 		@Override
 		public int opcode() {
-			return Opcodes.DYNAMIC_CONSTANT;
+			return ExtensionOpcodes.DYNAMIC_CONSTANT;
 		}
 	}
 
@@ -90,7 +90,7 @@ public abstract sealed class ConstantInstruction<C extends Constant> implements 
 
 		@Override
 		public int opcode() {
-			return Opcodes.LONG_CONSTANT;
+			return ExtensionOpcodes.LONG_CONSTANT;
 		}
 	}
 
@@ -102,7 +102,7 @@ public abstract sealed class ConstantInstruction<C extends Constant> implements 
 
 		@Override
 		public int opcode() {
-			return Opcodes.DOUBLE_CONSTANT;
+			return ExtensionOpcodes.DOUBLE_CONSTANT;
 		}
 	}
 
@@ -114,7 +114,7 @@ public abstract sealed class ConstantInstruction<C extends Constant> implements 
 
 		@Override
 		public int opcode() {
-			return Opcodes.INT_CONSTANT;
+			return ExtensionOpcodes.INT_CONSTANT;
 		}
 	}
 
@@ -126,7 +126,7 @@ public abstract sealed class ConstantInstruction<C extends Constant> implements 
 
 		@Override
 		public int opcode() {
-			return Opcodes.FLOAT_CONSTANT;
+			return ExtensionOpcodes.FLOAT_CONSTANT;
 		}
 	}
 
@@ -138,7 +138,7 @@ public abstract sealed class ConstantInstruction<C extends Constant> implements 
 
 		@Override
 		public int opcode() {
-			return Opcodes.TYPE_CONSTANT;
+			return ExtensionOpcodes.TYPE_CONSTANT;
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package dev.xdark.blw.classfile;
 
 import dev.xdark.blw.annotation.AnnotationBuilder;
+import dev.xdark.blw.annotation.Element;
 import dev.xdark.blw.classfile.attribute.Parameter;
 import dev.xdark.blw.classfile.generic.GenericMethodBuilder;
 import dev.xdark.blw.code.Code;
@@ -8,6 +9,7 @@ import dev.xdark.blw.code.CodeBuilder;
 import dev.xdark.blw.type.InstanceType;
 import dev.xdark.blw.type.MethodType;
 import dev.xdark.blw.util.Builder;
+import dev.xdark.blw.util.Reflectable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -21,6 +23,10 @@ public interface MethodBuilder extends MemberBuilder {
 	MethodBuilder parameter(Parameter parameter);
 
 	MethodBuilder code(Code code);
+
+	MethodBuilder annotationDefault(Element annotationDefault);
+
+	MethodBuilder annotationDefault(Reflectable<? extends Element> annotationDefault);
 
 	@Nullable
 	CodeBuilder.Nested<? extends MethodBuilder> code();
@@ -55,6 +61,12 @@ public interface MethodBuilder extends MemberBuilder {
 
 		@Override
 		CodeBuilder.Nested<MethodBuilder.Root> code();
+
+		@Override
+		MethodBuilder.Root annotationDefault(Element annotationDefault);
+
+		@Override
+		MethodBuilder.Root annotationDefault(Reflectable<? extends Element> annotationDefault);
 	}
 
 	interface Nested<U extends Builder> extends MethodBuilder, MemberBuilder.Nested<U> {
@@ -76,6 +88,12 @@ public interface MethodBuilder extends MemberBuilder {
 
 		@Override
 		CodeBuilder.Nested<MethodBuilder.Nested<U>> code();
+
+		@Override
+		MethodBuilder.Nested<U> annotationDefault(Element annotationDefault);
+
+		@Override
+		MethodBuilder.Nested<U> annotationDefault(Reflectable<? extends Element> annotationDefault);
 	}
 
 	static MethodBuilder.Root builder() {

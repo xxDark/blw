@@ -1,5 +1,6 @@
 package dev.xdark.blw.classfile;
 
+import dev.xdark.blw.annotation.Element;
 import dev.xdark.blw.classfile.attribute.Parameter;
 import dev.xdark.blw.code.Code;
 import dev.xdark.blw.type.InstanceType;
@@ -20,6 +21,9 @@ public interface Method extends Member, Reflectable<Method> {
 	List<InstanceType> exceptionTypes();
 
 	List<Parameter> parameters();
+
+	@Nullable
+	Element annotationDefault();
 
 	@Override
 	default Method reflectAs() {

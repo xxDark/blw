@@ -6,7 +6,7 @@ import dev.xdark.blw.type.Types;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Opcodes;
 
-final class AsmArrayVisitor extends AnnotationVisitor {
+class AsmArrayVisitor extends AnnotationVisitor {
 	private final ElementArrayBuilder builder;
 
 	AsmArrayVisitor(ElementArrayBuilder builder) {

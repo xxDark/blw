@@ -11,6 +11,8 @@ import dev.xdark.blw.code.Instruction;
 import dev.xdark.blw.code.instruction.InvokeDynamicInstruction;
 import dev.xdark.blw.code.instruction.LookupSwitchInstruction;
 import dev.xdark.blw.code.instruction.MethodInstruction;
+import dev.xdark.blw.code.instruction.PrimitiveConversion;
+import dev.xdark.blw.code.instruction.PrimitiveConversionInstruction;
 import dev.xdark.blw.code.instruction.SimpleInstruction;
 import dev.xdark.blw.code.instruction.TableSwitchInstruction;
 import dev.xdark.blw.code.instruction.VarInstruction;
@@ -34,9 +36,10 @@ import dev.xdark.blw.type.PrimitiveType;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-import static dev.xdark.blw.code.Opcodes.*;
+import static dev.xdark.blw.code.ExtensionOpcodes.*;
+import static dev.xdark.blw.code.JavaOpcodes.*;
 
-final class AsmDumpEngine implements ExecutionEngine {
+final class AsmDumpEngine implements ExecutionEngine, PrimitiveConversion {
 	private final LabelMapping labelMapping;
 	private final MethodVisitor mv;
 
@@ -68,7 +71,8 @@ final class AsmDumpEngine implements ExecutionEngine {
 		// It is faster if we do switch on opcode
 		switch (instruction.opcode()) {
 			case STRING_CONSTANT -> mv.visitLdcInsn(((OfString) constant).value());
-			case METHOD_HANDLE_CONSTANT -> mv.visitLdcInsn(Util.unwrapMethodHandle(((OfMethodHandle) constant).value()));
+			case METHOD_HANDLE_CONSTANT ->
+					mv.visitLdcInsn(Util.unwrapMethodHandle(((OfMethodHandle) constant).value()));
 			case DYNAMIC_CONSTANT -> mv.visitLdcInsn(Util.unwrapConstantDynamic(((OfDynamic) constant).value()));
 			case LONG_CONSTANT -> mv.visitLdcInsn(((OfLong) constant).value());
 			case DOUBLE_CONSTANT -> mv.visitLdcInsn(((OfDouble) constant).value());
@@ -174,7 +178,87 @@ final class AsmDumpEngine implements ExecutionEngine {
 	}
 
 	@Override
+	public void execute(PrimitiveConversionInstruction instruction) {
+		instruction.accept(this);
+	}
+
+	@Override
 	public void execute(Instruction instruction) {
 		throw new IllegalStateException("Unknown instruction %s".formatted(instruction));
+	}
+
+	@Override
+	public void i2l() {
+		mv.visitInsn(I2L);
+	}
+
+	@Override
+	public void i2f() {
+		mv.visitInsn(I2F);
+	}
+
+	@Override
+	public void i2d() {
+		mv.visitInsn(I2D);
+	}
+
+	@Override
+	public void l2i() {
+		mv.visitInsn(L2I);
+	}
+
+	@Override
+	public void l2f() {
+		mv.visitInsn(L2F);
+	}
+
+	@Override
+	public void l2d() {
+		mv.visitInsn(L2D);
+	}
+
+	@Override
+	public void f2i() {
+		mv.visitInsn(F2I);
+	}
+
+	@Override
+	public void f2l() {
+		mv.visitInsn(F2L);
+	}
+
+	@Override
+	public void f2d() {
+		mv.visitInsn(F2D);
+	}
+
+	@Override
+	public void d2i() {
+		mv.visitInsn(D2I);
+	}
+
+	@Override
+	public void d2l() {
+		mv.visitInsn(D2L);
+	}
+
+	@Override
+	public void d2f() {
+		mv.visitInsn(D2F);
+	}
+
+	@Override
+	public void i2b() {
+		mv.visitInsn(I2B);
+	}
+
+	@Override
+	public void i2c() {
+		mv.visitInsn(I2C);
+	}
+
+	@Override
+	public void i2s() {
+		mv.visitInsn(I2S);
 	}
 }

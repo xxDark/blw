@@ -176,10 +176,22 @@ public final class InternalAsmLibrary implements BytecodeLibrary {
 				}
 				mv.visitMaxs(code.maxStack(), code.maxLocals());
 			}
-			AnnotationDumper dumper = mv::visitAnnotation;
-			dumpAnnotationList(dumper, method.visibleRuntimeAnnotations(), true);
-			dumpAnnotationList(dumper, method.invisibleRuntimeAnnotations(), false);
+			{
+				AnnotationDumper dumper = mv::visitAnnotation;
+				dumpAnnotationList(dumper, method.visibleRuntimeAnnotations(), true);
+				dumpAnnotationList(dumper, method.invisibleRuntimeAnnotations(), false);
+			}
+			{
+				Element annotationDefault = method.annotationDefault();
+				if (annotationDefault != null) {
+					AnnotationVisitor annotationVisitor = mv.visitAnnotationDefault();
+					if (annotationVisitor != null) {
+						visitElement(annotationVisitor, null, annotationDefault);
+					}
+				}
+			}
 			mv.visitEnd();
+
 		}
 		for (Field field : classFileView.fields()) {
 			Constant cst;
@@ -198,7 +210,7 @@ public final class InternalAsmLibrary implements BytecodeLibrary {
 		os.write(writer.toByteArray());
 	}
 
-	public void visitElement(AnnotationVisitor av, String name, Element element) {
+	private void visitElement(AnnotationVisitor av, String name, Element element) {
 		if (element instanceof ElementEnum en) {
 			av.visitEnum(name, en.type().descriptor(), en.name());
 			return;
@@ -287,6 +299,9 @@ public final class InternalAsmLibrary implements BytecodeLibrary {
 	private void dumpAnnotationList(AnnotationDumper dumper, List<Annotation> annotations, boolean visible) {
 		for (Annotation annotation : annotations) {
 			AnnotationVisitor visitor = dumper.visitAnnotation(annotation.type().descriptor(), visible);
+			if (visitor == null) {
+				continue;
+			}
 			for (Map.Entry<String, Element> entry : annotation) {
 				visitElement(visitor, entry.getKey(), entry.getValue());
 			}

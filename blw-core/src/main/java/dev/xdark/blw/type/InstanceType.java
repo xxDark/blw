@@ -4,6 +4,7 @@ public final class InstanceType implements ObjectType {
 
 	private final String descriptor;
 	private final String internalName;
+	private String externalName;
 
 	InstanceType(String descriptor, String internalName) {
 		this.descriptor = descriptor;
@@ -18,6 +19,16 @@ public final class InstanceType implements ObjectType {
 	@Override
 	public String internalName() {
 		return internalName;
+	}
+
+	@Override
+	public String externalName() {
+		String externalName = this.externalName;
+		if (externalName == null) {
+			externalName = ObjectType.super.externalName();
+			this.externalName = externalName;
+		}
+		return externalName;
 	}
 
 	@Override

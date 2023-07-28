@@ -1,7 +1,7 @@
 package dev.xdark.blw.code.instruction;
 
 import dev.xdark.blw.code.Instruction;
-import dev.xdark.blw.code.Opcodes;
+import dev.xdark.blw.code.JavaOpcodes;
 import dev.xdark.blw.type.ObjectType;
 
 public final class InstanceofInstruction implements Instruction {
@@ -17,6 +17,6 @@ public final class InstanceofInstruction implements Instruction {
 
 	@Override
 	public int opcode() {
-		return Opcodes.INSTANCEOF;
+		return JavaOpcodes.INSTANCEOF;
 	}
 }

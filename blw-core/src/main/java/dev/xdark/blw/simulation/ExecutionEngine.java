@@ -11,6 +11,7 @@ import dev.xdark.blw.code.Instruction;
 import dev.xdark.blw.code.instruction.InvokeDynamicInstruction;
 import dev.xdark.blw.code.instruction.LookupSwitchInstruction;
 import dev.xdark.blw.code.instruction.MethodInstruction;
+import dev.xdark.blw.code.instruction.PrimitiveConversionInstruction;
 import dev.xdark.blw.code.instruction.SimpleInstruction;
 import dev.xdark.blw.code.instruction.TableSwitchInstruction;
 import dev.xdark.blw.code.instruction.VarInstruction;
@@ -48,6 +49,8 @@ public interface ExecutionEngine {
 	void execute(ConditionalJumpInstruction instruction);
 
 	void execute(VariableIncrementInstruction instruction);
+
+	void execute(PrimitiveConversionInstruction instruction);
 
 	void execute(Instruction instruction);
 }
